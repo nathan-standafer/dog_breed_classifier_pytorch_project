@@ -1,3 +1,7 @@
+## Dog Classifier project from Udacity Deep Learning Nanodegree
+My submission for the dog classifier project.  The project structure was provided by Udacity.  The implementation of the Deep Learning models was devloped by myself.
+
+
 [//]: # (Image References)
 
 [image1]: ./images/sample_dog_output.png "Sample Output"
