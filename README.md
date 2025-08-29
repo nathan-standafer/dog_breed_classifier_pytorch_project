@@ -1,72 +1,62 @@
-## Dog Classifier project from Udacity Deep Learning Nanodegree
-My submission for the dog classifier project.  The project structure was provided by Udacity.  The implementation of the Deep Learning models was devloped by myself.
+# Dog Breed Classifier
 
+This project is a dog breed classifier that can identify the breed of a dog in an image. If the image contains a human, it will identify the most resembling dog breed. This was a fun project that allowed me to dive deep into the world of Convolutional Neural Networks (CNNs) and transfer learning.
 
-[//]: # (Image References)
+![Sample Output](./images/sample_dog_output.png)
 
-[image1]: ./images/sample_dog_output.png "Sample Output"
-[image2]: ./images/vgg16_model.png "VGG-16 Model Layers"
-[image3]: ./images/vgg16_model_draw.png "VGG16 Model Figure"
+## How it Works
 
+The application works by processing an image through a pipeline of models:
 
-## Project Overview
+1.  **Human or Dog?** The first step is to determine if the image contains a human or a dog.
+    *   **Human Detection:** I used OpenCV's implementation of Haar feature-based cascade classifiers to detect human faces.
+    *   **Dog Detection:** To detect dogs, I used a pre-trained VGG-16 model. This model, trained on the massive ImageNet dataset, can identify a wide variety of objects, including many dog breeds.
 
-Welcome to the Convolutional Neural Networks (CNN) project in the AI Nanodegree! In this project, you will learn how to build a pipeline that can be used within a web or mobile app to process real-world, user-supplied images.  Given an image of a dog, your algorithm will identify an estimate of the canine’s breed.  If supplied an image of a human, the code will identify the resembling dog breed.  
+2.  **Dog Breed Classification:** Once a dog is detected (or a human that looks like a dog!), the image is passed to the breed classifier. I developed two different CNNs for this task:
 
-![Sample Output][image1]
+    *   **A CNN from Scratch:** I first built a CNN from the ground up. This was a great learning experience that helped me understand the fundamentals of CNN architecture. While it achieved a reasonable accuracy, it was clear that a more sophisticated approach was needed for this challenging task.
 
-Along with exploring state-of-the-art CNN models for classification and localization, you will make important design decisions about the user experience for your app.  Our goal is that by completing this lab, you understand the challenges involved in piecing together a series of models designed to perform various tasks in a data processing pipeline.  Each model has its strengths and weaknesses, and engineering a real-world application often involves solving many problems without a perfect answer.  Your imperfect solution will nonetheless create a fun user experience!
+    *   **A CNN using Transfer Learning:** To achieve a higher accuracy, I used a technique called **transfer learning**.
 
+        **What is Transfer Learning?**
 
-## Project Instructions
+        Imagine you want to become a great chef. Instead of starting from scratch and learning how to boil water, you could learn from a world-renowned chef who has been cooking for decades. You would be "transferring" their knowledge to yourself.
 
-### Instructions
+        In the world of AI, transfer learning is very similar. Instead of building a neural network from scratch, we can use a pre-trained model that has already been trained on a huge dataset (like ImageNet, which contains millions of images). This pre-trained model has already learned to recognize a vast number of features, like edges, shapes, and textures.
 
-1. Clone the repository and navigate to the downloaded folder.
-	
-	```	
-		git clone https://github.com/udacity/deep-learning-v2-pytorch.git
-		cd deep-learning-v2-pytorch/project-dog-classification
-	```
-    
-__NOTE:__ if you are using the Udacity workspace, you *DO NOT* need to re-download the datasets in steps 2 and 3 - they can be found in the `/data` folder as noted within the workspace Jupyter notebook.
+        For this project, I used the popular **VGG-16 model**. I took the pre-trained VGG-16 model and removed the final layer, which was originally designed to classify 1000 different objects in the ImageNet dataset. I then added my own custom final layer, which is trained to classify the 133 dog breeds in our dataset. This way, I was able to leverage the powerful feature extraction capabilities of the VGG-16 model and achieve a much higher accuracy than my model from scratch.
 
-2. Download the [dog dataset](https://s3-us-west-1.amazonaws.com/udacity-aind/dog-project/dogImages.zip).  Unzip the folder and place it in the repo, at location `path/to/dog-project/dogImages`.  The `dogImages/` folder should contain 133 folders, each corresponding to a different dog breed.
-3. Download the [human dataset](http://vis-www.cs.umass.edu/lfw/lfw.tgz).  Unzip the folder and place it in the repo, at location `path/to/dog-project/lfw`.  If you are using a Windows machine, you are encouraged to use [7zip](http://www.7-zip.org/) to extract the folder. 
-4. Make sure you have already installed the necessary Python packages according to the README in the program repository.
-5. Open a terminal window and navigate to the project folder. Open the notebook and follow the instructions.
-	
-	```
-		jupyter notebook dog_app.ipynb
-	```
+## Technologies Used
 
-__NOTE:__ While some code has already been implemented to get you started, you will need to implement additional functionality to successfully answer all of the questions included in the notebook. __Unless requested, do not modify code that has already been included.__
+*   **Python**
+*   **PyTorch:** The main deep learning framework used for this project.
+*   **OpenCV:** Used for human face detection.
+*   **NumPy:** For numerical operations.
+*   **Matplotlib:** For displaying images.
 
-__NOTE:__ In the notebook, you will need to train CNNs in PyTorch.  If your CNN is taking too long to train, feel free to pursue one of the options under the section __Accelerating the Training Process__ below.
+## Setup and Usage
 
+1.  **Clone the repository:**
+    ```
+    git clone https://github.com/your-username/dog_breed_classifier_pytorch_project.git
+    cd dog_breed_classifier_pytorch_project
+    ```
+2.  **Download the datasets:**
+    *   [Dog dataset](https://s3-us-west-1.amazonaws.com/udacity-aind/dog-project/dogImages.zip)
+    *   [Human dataset](http://vis-www.cs.umass.edu/lfw/lfw.tgz)
+3.  **Open the notebook:**
+    ```
+    jupyter notebook dog_app.ipynb
+    ```
+    Follow the instructions in the notebook to see the code in action.
 
+## Results
 
-## (Optionally) Accelerating the Training Process 
+*   **Model from scratch:** Achieved a test accuracy of **14%**.
+*   **Model with transfer learning:** Achieved a test accuracy of **80%**.
 
-If your code is taking too long to run, you will need to either reduce the complexity of your chosen CNN architecture or switch to running your code on a GPU.  If you'd like to use a GPU, you can spin up an instance of your own:
+This significant improvement in accuracy clearly demonstrates the power of transfer learning.
 
-#### Amazon Web Services
+## License
 
-You can use Amazon Web Services to launch an EC2 GPU instance. (This costs money, but enrolled students should see a coupon code in their student `resources`.)
-
-## Evaluation
-
-Your project will be reviewed by a Udacity reviewer against the CNN project rubric.  Review this rubric thoroughly and self-evaluate your project before submission.  All criteria found in the rubric must meet specifications for you to pass.
-
-
-## Project Submission
-
-Your submission should consist of the github link to your repository.  Your repository should contain:
-- The `dog_app.ipynb` file with fully functional code, all code cells executed and displaying output, and all questions answered.
-- An HTML or PDF export of the project notebook with the name `report.html` or `report.pdf`.
-
-Please do __NOT__ include any of the project data sets provided in the `dogImages/` or `lfw/` folders.
-
-### Ready to submit your project?
-
-Click on the "Submit Project" button in the classroom and follow the instructions to submit!
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
